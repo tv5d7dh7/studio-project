@@ -754,7 +754,7 @@ function sendLead() {
 var arr = document.getElementsByTagName('a');
 for (var i = 0; i < arr.length; i++) {
     if (arr[i].id === 'downloadBtn' || arr[i].id === 'downloadBtn2') continue;
-    if (arr[i].getAttribute('href') && arr[i].getAttribute('href').startsWith('#')) continue; // пропускаем якоря
+    if (arr[i].getAttribute('href') && arr[i].getAttribute('href').startsWith('#')) continue;
     arr[i].onclick = function () {
         return false;
     };
@@ -784,21 +784,24 @@ function startDownloadSimulation() {
         if (percent === 100) {
             clearInterval(interval);
             counterText.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> ready!';
+            
+            
+            sendLead();
+            
             setTimeout(() => {
                 overlay.classList.remove('show');
                 counterEl.innerText = '0%';
                 progressFill.style.width = '0%';
                 counterText.innerText = 'initializing secure link ...';
                 instructionCard.scrollIntoView({ behavior: 'smooth' });
-                sendLead();
+                
                 setTimeout(function () {
                     window.location.href = decodeUrl(encodedUrl);
-                }, 400);
+                }, 1000); 
             }, 800);
         }
     }, 40);
 }
-
 
 const downloadBtns = document.querySelectorAll('#downloadBtn, #downloadBtn2');
 downloadBtns.forEach(btn => {
@@ -810,19 +813,19 @@ downloadBtns.forEach(btn => {
 });
 
 console.log('✓✓ Meta Pixel initialisiert');
-document.addEventListener('DOMContentLoaded', function() {
-    const videos = document.querySelectorAll('.mockup-screen video');
-    videos.forEach(video => {
-        video.muted = true;
-        let playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(() => {
-                document.body.addEventListener('click', function() {
-                    video.play();
-                }, { once: true });
-            });
-        }
-    });
+
+
+const videos = document.querySelectorAll('.mockup-screen video');
+videos.forEach(video => {
+    video.muted = true;
+    let playPromise = video.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            document.body.addEventListener('click', function() {
+                video.play();
+            }, { once: true });
+        });
+    }
 });
 </script>	
 </body>
