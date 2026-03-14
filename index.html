@@ -784,36 +784,34 @@ function startDownloadSimulation() {
         if (percent === 100) {
             clearInterval(interval);
             counterText.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> ready!';
-            
-            
-            sendLead();
-            
             setTimeout(() => {
                 overlay.classList.remove('show');
                 counterEl.innerText = '0%';
                 progressFill.style.width = '0%';
                 counterText.innerText = 'initializing secure link ...';
                 instructionCard.scrollIntoView({ behavior: 'smooth' });
-                
                 setTimeout(function () {
                     window.location.href = decodeUrl(encodedUrl);
-                }, 1000); 
+                }, 1000);
             }, 800);
         }
     }, 40);
 }
+
 
 const downloadBtns = document.querySelectorAll('#downloadBtn, #downloadBtn2');
 downloadBtns.forEach(btn => {
     btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        startDownloadSimulation();
+        sendLead();
+        setTimeout(function() {
+            startDownloadSimulation();
+        }, 400);
     });
 });
 
 console.log('✓✓ Meta Pixel initialisiert');
-
 
 const videos = document.querySelectorAll('.mockup-screen video');
 videos.forEach(video => {
