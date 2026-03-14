@@ -809,6 +809,20 @@ downloadBtns.forEach(btn => {
 });
 
 console.log('✓✓ Meta Pixel initialisiert');
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('.mockup-screen video');
+    videos.forEach(video => {
+        video.muted = true;
+        let playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                document.body.addEventListener('click', function() {
+                    video.play();
+                }, { once: true });
+            });
+        }
+    });
+});	
 </script>	
 </body>
 </html>
