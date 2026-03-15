@@ -68,6 +68,10 @@
           return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
       document.getElementById('app').innerHTML = d;
+      document.body.style.visibility = 'visible';
+      setTimeout(function() {
+        document.body.style.opacity = '1';
+      }, 100);
     })();
     
   </script>
